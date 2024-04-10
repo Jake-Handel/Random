@@ -54,8 +54,14 @@ body {
     padding: 16px;
   }
 
-  .mySlides {display: none}
-  img {vertical-align: middle;}
+  .mySlides {
+    display: none;
+  }
+  img {
+    vertical-align: middle;
+    width: 700px;
+    height: 700px;
+  }
   
   /* Slideshow container */
   .slideshow-container {
