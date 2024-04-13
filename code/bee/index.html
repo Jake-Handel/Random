@@ -4,6 +4,7 @@
 <head>
     <title>Les Petit Joyeux</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -14,20 +15,20 @@
                     src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/logo.png?v=1711180294454"
                     alt="Les Petit Joyeux" />
             </a>
-            <div class="dropdown">
-                <button class="dropbtn">Dropdown
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a class="dropdown-option" href="plush.html">Plush Toys</a>
-                    <a class="dropdown-option" href="wooden.html">Wooden Toys</a>
-                    <a class="dropdown-option" href="vehicle.html">Vehicle Toys</a>
-                </div>
+            <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <a class="dropdown-option" href="plush.html">Plush Toys</a>
+                <a class="dropdown-option" href="wooden.html">Wooden Toys</a>
+                <a class="dropdown-option" href="vehicle.html">Vehicle Toys</a>
+            </div>
+            <div id="main">
+                <button id="button" class="openbtn" onclick="openNav()">☰ Open Sidebar</button>
             </div>
         </div>
     </header>
 
     <main>
+
         <div class="hero-logo">
             <img src="large logo" alt="Les Petit Joyeux" />
             <h3>
@@ -37,30 +38,55 @@
         </div>
 
         <div class="timeline">
-            <h2>1910s</h2>
-            <figure>
-                <img src="seaplane1" alt="Wooden Plane" />
-                <figcaption>Wooden Plane, 1913</figcaption>
-            </figure>
-            <figure>
-                <img src="wooden-swan" alt="Wooden Swan" />
-                <figcaption>Wooden Pull-along Swan, 1900</figcaption>
-            </figure>
+            <div class="one">
+                <h2>1910s</h2>
+                <table>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img class="time"
+                                    src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/seaplane1.webp?v=1711162767527"
+                                    alt="Wooden Plane" />
+                                <figcaption class="imgtext">Wooden Plane, 1913</figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <figure>
+                                <img class="time"
+                                    src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/swan.webp?v=1712982251608"
+                                    alt="Wooden Swan" />
+                                <figcaption class="imgtext">Wooden Pull-along Swan, 1900</figcaption>
+                            </figure>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-            <h2>1920s</h2>
-            <figure>
-                <img src="felix-cat" alt="Felix Cat Plush" />
-                <figcaption>Felix the Cat Plush Toy, 1922</figcaption>
-            </figure>
-            <figure>
-                <img src="wooden-blocks" alt="Set of Wooden Blocks" />
-                <figcaption>Boxed Set of Wooden blocks, 1925</figcaption>
-            </figure>
-            <figure>
-                <img src="train-wagon" alt="Toy Train Wagon" />
-                <figcaption>Toy Wagon for Train Set, 1920 </figcaption>
-            </figure>
-
+            <div class="two">
+                <h2>1920s</h2>
+                <table>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img class="time" src="felix-cat" alt="Felix Cat Plush" />
+                                <figcaption class="imgtext">Felix the Cat Plush Toy, 1922</figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <figure>
+                                <img class="time" src="wooden-blocks" alt="Set of Wooden Blocks" />
+                                <figcaption class="imgtext">Boxed Set of Wooden blocks, 1925</figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <figure>
+                                <img class="time" src="train-wagon" alt="Toy Train Wagon" />
+                                <figcaption class="imgtext">Toy Wagon for Train Set, 1920 </figcaption>
+                            </figure>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <h2>1940s</h2>
             <figure>
                 <img src="plush-koala" alt="Koala Plush Toy" />
@@ -92,7 +118,6 @@
                 <img src="orange-wagon" alt="Orange Child's Wagon" />
                 <figcaption>Orange Ride-on Wagon, 1971</figcaption>
             </figure>
-
         </div>
     </main>
 
