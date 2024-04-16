@@ -187,27 +187,33 @@ table {
 }
 
 /* Plush Toys */
-.plush-table {
-  padding: 1%;
-}
-
-table.plush {
-  padding: 3px;
-  width: 60%;
-  margin-bottom: 2%;
+.plush-container {
+  padding: 2rem;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+  align-items: center;
+  width: 50%;
+  font: 500 100%/1.5 system-ui;
+  display: block;
+  font-size: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img.plushes {
-  width: 40%;
-  height: 40%;
+  width: 30%;
+  height: 30%;
+  max-width: 100%;
+  height: auto;
 }
 
-img.plushes:hover {
-  border: 2px solid #818181;
-}
-
-td.plush {
-  padding: 2%;
+.plush-text {
+  text-align: center;
+  position: relative;
+  margin: -3rem 0 2rem 1rem;
+  padding: 1rem;
+  background-color: rgba(red, 1);
+  width: 35%;
 }
 
 /* Index page */
