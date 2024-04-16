@@ -2,48 +2,117 @@
 <html>
   <head>
     <title>Les Petit Joyeux</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Luckiest+Guy&display=swap");
+    </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Luckiest+Guy&display=swap");
+    </style>
   </head>
 
   <body>
     <header>
-      <a href="index.html">
-        <img width="100" src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/logo.png?v=1711180294454" alt="Les Petit Joyeux" />
-      </a>
-      <nav>
-        <ul>
-          <li><a href="plush.html">Plush Toys</a></li>
-          <li><a href="wooden.html">Wooden Toys</a></li>
-          <li><a href="vehicle.html">Vehicle Toys</a></li>
-        </ul>
-      </nav>
+      <!-- Nav Bar -->
+      <div class="navbar">
+        <a href="index.html">
+          <img
+            width="100"
+            src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/logo.png?v=1711180294454"
+            alt="Les Petit Joyeux"
+          />
+        </a>
+        <div id="mySidebar" class="sidebar">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >×</a
+          >
+          <a class="dropdown-option" href="about.html">About</a>
+          <a class="dropdown-option" href="plush.html">Plush Toys</a>
+          <a class="dropdown-option" href="wooden.html">Wooden Toys</a>
+          <a class="dropdown-option" href="vehicle.html">Vehicle Toys</a>
+        </div>
+        <div id="main">
+          <button id="button" class="openbtn" onclick="openNav()">
+            ☰ Open Sidebar
+          </button>
+        </div>
+      </div>
     </header>
+    <br /><br /><br /><br /><br /><br />
+    <!--need to add line breaks with css-->
 
     <main>
       <h3>About Us</h3>
-      <p>
-        'Les Petit Joyeux' is ultimately, a very simple premise. Translating to
-        "Little Happiness", this website compiles a selection of toys from the
-        Powerhouse Museum. Our aim is give people an insight into the evolution
-        of toys over the years, and bring a little touch of happiness and
-        nostalgia into the everyday.
-      </p>
-      <p>
-        All images and information on this website was accessed through the
-        Powerhouse Mseum, accessible at the link included below. The PowerHouse
-        Museum is located in Sydney, Australia and is home to over half a
-        million objects deemed to be of signficance to Australians.
-      </p>
-      <p>
-        <a><link /> https://collection.powerhouse.com.au/</a>
-        <!--need to make link fucntional: ASK RILEY-->
-      </p>
+      <div class="about-cont">
+        <div class="about-text">
+          <p>
+            'Les Petit Joyeux' is ultimately, a very simple premise. Translating
+            to "Little Happiness", this website compiles a selection of toys
+            from the Powerhouse Museum. Our aim is give people an insight into
+            the evolution of toys over the years, and bring a little touch of
+            happiness and nostalgia into the everyday.
+          </p>
+          <p>
+            All images and information on this website was accessed through the
+            Powerhouse Mseum, accessible at the link included below. The
+            PowerHouse Museum is located in Sydney, Australia and is home to
+            over half a million objects deemed to be of signficance to
+            Australians.
+          </p>
+          <p>
+            <a href="https://collection.powerhouse.com.au"
+              >Click here to view the Powerhouse Museum Collection</a
+            >
+          </p>
+        </div>
+        <div class="img-colour-cont">
+          <div class="about-img-cont">
+            <img
+              class="about-img"
+              src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/logo.png?v=1711180294454"
+            />
+          </div>
+          <div class="colour-grid">
+            <!-- Need to put in colour images but can change if need be -->
+            <img
+              class="colour-img"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxf4ouHc-V7VgCbKNVsMNKNYzWRZa_qFpRFCsYZvIZPA&s"
+            />
+            <img
+              class="colour-img"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxf4ouHc-V7VgCbKNVsMNKNYzWRZa_qFpRFCsYZvIZPA&s"
+            />
+            <img
+              class="colour-img"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxf4ouHc-V7VgCbKNVsMNKNYzWRZa_qFpRFCsYZvIZPA&s"
+            />
+            <img
+              class="colour-img"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxf4ouHc-V7VgCbKNVsMNKNYzWRZa_qFpRFCsYZvIZPA&s"
+            />
+            <img
+              class="colour-img"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxf4ouHc-V7VgCbKNVsMNKNYzWRZa_qFpRFCsYZvIZPA&s"
+            />
+          </div>
+        </div>
+      </div>
     </main>
 
-    <footer>
-      <!--split footer into three columns-->
-      <a href="about.html">About</a>
-      <a href="index.html"> <img src="small-logo" /></a>
-      <a> Back to Top <img src="arrow" /></a>
-    </footer>
+    <div class="botnav">
+      <footer>
+        <a class="about" href="about.html">About</a>
+        <button
+          onclick="topFunction()"
+          id="myBtn"
+          title="Go to top"
+          style="font-weight: 900"
+        >
+          ↑
+        </button>
+      </footer>
+    </div>
   </body>
 </html>

@@ -1,12 +1,18 @@
 /* General Web Page */
 body {
   margin: 0;
+  font-size: 17px;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 /* Top Nav-bar*/
 .navbar {
   overflow: hidden;
-  background-color: #333;
+  background-color: #E1E1E1;
   top: 0;
   margin: 0;
   width: 100%;
@@ -16,10 +22,9 @@ body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
-  text-decoration: none;
 }
 
 /* Sidebar */
@@ -30,7 +35,7 @@ body {
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: #111;
+  background-color: #E1E1E1;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -40,13 +45,18 @@ body {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+   color: #818181;
   display: block;
   transition: 0.3s;
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: black;
 }
 
 .sidebar .closebtn {
@@ -55,19 +65,25 @@ body {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+  font-size: 25px;
 }
 
 .openbtn {
-  font-size: 20px;
   cursor: pointer;
-  background-color: #111;
-  color: white;
+  background-color: #E1E1E1;
+  color: black;
   padding: 10px 15px;
   border: none;
+  font-size: 20px;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 .openbtn:hover {
-  background-color: #444;
+  background-color: #f1f1f1;
 }
 
 #main {
@@ -79,19 +95,25 @@ body {
 /* Bottom Nav-bar */
 .botnav {
   overflow: hidden;
-  background-color: #333;
+  background-color: #E1E1E1;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }
 
-.botnav a {
+a.about {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 .botnav a:hover {
@@ -100,11 +122,11 @@ body {
 }
 
 .botnav a.active {
-  background-color: #04AA6D;
+  background-color: #E1E1E1;
   color: white;
 }
 
-
+/*back to top button*/
 #myBtn {
   bottom: 20px; 
   float: right;
@@ -112,27 +134,40 @@ body {
   z-index: 99; 
   border: none; 
   outline: none; 
-  background-color: red; 
-  color: white; 
+  background-color: #E1E1E1; 
+  color: black; 
   cursor: pointer; 
   padding: 15px; 
   font-size: 18px; 
 }
 
 #myBtn:hover {
-  background-color: #555; 
+  background-color: #f1f1f1; 
 }
 
 
 /* General tags */
-main {
-  margin-top: 7%;
+
+h3{
+  font-family: "Luckiest Guy", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 50px;
+  text-align: center;
 }
 
 img.time {
-  width: 10%;
-  height: 10%;
+  width: 70%;
+  height: 70%;
   display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px
+
+}
+  
+table {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -144,21 +179,119 @@ img.time {
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
+  font-size: 15px;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
-table {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+/* Plush Toys */
+.plush-table {
+  padding: 1%;
 }
 
-/* Each time period section */
+table.plush {
+  padding: 3px;
+  width: 60%;
+}
+img.plushes {
+  width: 20%;
+  height: 20%;
+}
+
+td.plush {
+  padding: 2%;
+}
+
+/* Index page */
 .one {
   padding: 10px;
-  background-color: thistle;
+  background-color: #FA667F;
 }
 
 .two {
   padding: 10px;
-  background-color: chocolate;
+  background-color: #FFEA7F;
+}
+
+.three {
+  padding: 10px;
+  background-color: #98DC7F
+}
+
+.four{
+  padding: 10px;
+  background-color: #A2EBE9;
+}
+
+.five{
+  padding:10px;
+  background-color:#B98BDC;
+}
+
+
+/* Wooden Lizard Page */
+div.scroll-container {
+  margin-left: 2%;
+  background-color: white;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 10px;
+  width: 45%;
+  float: left;
+  box-sizing: border-box;
+  /*fix alignment*/
+}
+
+div.scroll-container img {
+  padding: 10px;
+}
+
+div.lizard-container {
+  padding: 7px;
+  float: right;
+  width:40%;
+}
+
+/* About Page */
+.about-cont {
+  padding: 6px;
+  margin: 0;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.about-text {
+  float: left;
+  width: 49%;
+}
+
+.img-colour-cont {
+  float: right;
+  width: 49%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+img.about-img {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.colour-grid {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+img.colour-img {
+  width: 15%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }

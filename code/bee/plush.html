@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--layout in grid-->
+<html>
+
+<head>
+    <title>Les Petit Joyeux</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Luckiest+Guy&display=swap");
+    </style>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Luckiest+Guy&display=swap");
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Nav Bar -->
+        <div class="navbar">
+            <a href="index.html">
+                <img width="100"
+                    src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/logo.png?v=1711180294454"
+                    alt="Les Petit Joyeux" />
+            </a>
+            <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <a class="dropdown-option" href="about.html">About</a>
+                <a class="dropdown-option" href="plush.html">Plush Toys</a>
+                <a class="dropdown-option" href="wooden.html">Wooden Toys</a>
+                <a class="dropdown-option" href="vehicle.html">Vehicle Toys</a>
+            </div>
+            <div id="main">
+                <button id="button" class="openbtn" onclick="openNav()">
+                    ☰ Open Sidebar
+                </button>
+            </div>
+        </div>
+    </header>
+    <br /><br /><br /><br /><br />
+    <main>
+        <h3>Plush Toys</h3>
+        <p style="padding: 10px;">Click on an image below to find out more information about the toy!</p>
+
+        <!-- NEW CODE STARTS -->
+        <div class="plush-table">
+            <table class="plush">
+                <tr class="plush">
+                    <td class="plush">
+                        <a href="felix-cat.html">
+                            <img class="plushes"
+                                src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/felix.webp?v=1712722056975"
+                                alt="Felix Cat Plush" />
+                        </a>
+                    </td>
+                    <td class="plush">
+                        <div class="desc">Add a description of the image here</div>
+                    </td>
+                </tr>
+                <tr class="plush">
+                    <td class="plush">
+                        <div class="desc">Add a description of the image here</div>
+                    </td>
+                    <td class="plush">
+                        <a href="plush-horse.html">
+                            <img class="plushes"
+                                src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/horse.webp?v=1712722069365"
+                                alt="Horse Plush Toy" /></a>
+                    </td>
+                </tr>
+                <tr class="plush">
+                    <td class="plush">
+                        <a href="plush-koala.html">
+                            <img class="plushes"
+                                src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/koala.webp?v=1712722076118"
+                                alt="Plush Horse" /></a>
+                    </td>
+                    <td class="plush">
+                        <div class="desc">Add a description of the image here</div>
+                    </td>
+                </tr>
+                <tr class="plush">
+                    <td class="plush">
+                        <div class="desc">Add a description of the image here</div>
+                    </td>
+                    <td class="plush">
+                        <a href="plush-dog.html">
+                            <img class="plushes"
+                                src="https://cdn.glitch.global/fc9af3c7-849a-4431-bbc0-036acb2fa416/dog.webp?v=1712722052277"
+                                alt="Dog Plush Toy" /></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- NEW CODE ENDS -->
+    </main>
+
+    <div class="botnav">
+        <footer>
+            <a class="about" href="about.html">About</a>
+            <button onclick="topFunction()" id="myBtn" title="Go to top" style="font-weight: 900">
+                ↑
+            </button>
+        </footer>
+    </div>
+</body>
+
+</html>
