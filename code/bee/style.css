@@ -197,8 +197,12 @@ table.plush {
   width: 60%;
 }
 img.plushes {
-  width: 20%;
-  height: 20%;
+  width: 40%;
+  height: 40%;
+}
+
+img.plushes:hover {
+  border: 2px solid #818181;
 }
 
 td.plush {
