@@ -8,25 +8,20 @@ class Table(object):
         self.player = Player(player, funds)
         self.deck = Deck()
 
-        # call table_setup() method to shuffle and deal first cards
         self.table_setup()
 
     def table_setup(self):
 
-        # shuffle the deck when we all 'sit down' at the table before dealing
         self.deck.shuffle()
 
-        # place initial bet for player
         self.player.place_bet()
 
-        # deal a card to the player, then the dealer, then the player to start the game
         self.deal_card(self.player)
         self.deal_card(self.dealer)
         self.deal_card(self.player)
-        self.calculate_score(self.player)  # calculate the player and dealer score at start to check for blackjack
+        self.calculate_score(self.player) 
         self.calculate_score(self.dealer)
 
-        # call self.main() which is where we will set up the recurring hit/stick prompt and deal cards
         self.main()
 
     def main(self):
@@ -52,7 +47,7 @@ class Table(object):
             elif score >= 17:
                 self.check_final_score()
 
-    def __str__(self):  # this is just for checking progress during programming
+    def __str__(self):
 
         dealer_hand = [card for card, value in self.dealer.hand]
         player_hand = [card for card, value in self.player.hand]
@@ -75,7 +70,7 @@ class Table(object):
 
     def calculate_score(self, player):
 
-        ace = False  # figure a way to check for ace in hand
+        ace = False  
         score = 0
         for card in player.hand:
             if card[1] == 1 and not ace:
@@ -99,7 +94,7 @@ class Table(object):
         elif score == 21:
             print(self)
             print("{} blackjack!".format(player.name))
-            try:  # can only payout if player wins, not dealer.  Protecting with try / except
+            try:  
                 player.payout()
             except:
                 pass
@@ -127,7 +122,7 @@ class Table(object):
             if again.lower().startswith('y'):
                 self.__init__(self.player.name, funds=self.player.funds)
             elif again.lower().startswith('n'):
-                exit(1)  # just trying exit code 1 to confirm this is exiting when I ask
+                exit(1) 
         elif bank < 10:
             print("You're all out of money!  Come back with some more dough, good luck next time!")
             exit(2)
@@ -150,16 +145,13 @@ class Player(Dealer):
         self.funds = funds
         self.bet = bet
 
-    def place_bet(self, amount=10):  # I might later incorporate a way to change amount, for now just default to 10
+    def place_bet(self, amount=10):  
 
-        # called at the beginning of every hand
         self.funds -= amount
         self.bet += amount
 
     def payout(self):
 
-        # money is subtracted from funds at start of each hand when bet goes down
-        # payout is 1:1 always (for now, maybe switch to 3:2 if player gets blackjack)
         self.funds += (self.bet * 2)
         self.bet = 0
 
@@ -178,14 +170,8 @@ class Player(Dealer):
 
 class Deck(object):
 
-    # using one stack for now
-    # create a list of all the values and shuffle them
-    # when dealing the cards use pop() to get the card off the top of the stack
-
     def __init__(self):
 
-        # stack is composed of tuples:
-        # [0] is a string to show the player for their hand
         self.stack = [('A', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5),
                       ('6', 6), ('7', 7), ('8', 8), ('9', 9), ('10', 10),
                       ('J', 10), ('Q', 10), ('K', 10)] * 4
