@@ -102,7 +102,7 @@ class Table(object):
         else:
             return
 
-    def check_final_score(self):
+    def check_final_score(self, funds):
 
         dealer_score = self.dealer.score
         player_score = self.player.score
@@ -112,6 +112,7 @@ class Table(object):
             self.end_game()
         else:
             print("{} wins!".format(self.player.name))
+            funds = funds + 10
             self.end_game()
 
     def end_game(self):
