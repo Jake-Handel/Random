@@ -60,7 +60,7 @@ def update_score():
     global score
     for pipe in pipes:
         if pipe[0].x + PIPE_WIDTH // 2 == bird_x:
-               print(score)
+               score += 1
                pass
         pass
    
@@ -119,6 +119,7 @@ while running:
     for pipe in pipes:
         if bird_rect.colliderect(pipe[0]) or bird_rect.colliderect(pipe[1]) or bird_rect.colliderect(ground_rect_top) or bird_rect.colliderect(ground_rect_bottom):
             running = False
+            print("Your final score was:", score)
     
     # Update display
     pygame.display.flip()
