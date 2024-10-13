@@ -19,7 +19,7 @@ if syms:
     all += symbols
 
 length = int(input("What is the length of the password: "))
-amount = int(input("Enter the amount: "))
+amount = int(input("Enter the amount of passwords: "))
 
 for x in range(amount):
     password = "".join(random.sample(all, length))
