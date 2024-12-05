@@ -27,6 +27,9 @@ except Exception as e:
     logger.error(f"Error configuring Gemini: {str(e)}")
     raise
 
+# Store conversations in memory (you might want to use a database in production)
+conversations = {}
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy", "message": "Backend is running!"})
@@ -37,11 +40,30 @@ def handle_data():
         try:
             data = request.json
             message = data.get('message', '')
-            logger.info(f"Received message: {message}")
+            session_id = request.headers.get('X-Session-ID', 'default')
             
-            # Get response from Gemini
-            response = get_gemini_response(message)
-            logger.info(f"Gemini response: {response}")
+            # Initialize conversation history if it doesn't exist
+            if session_id not in conversations:
+                conversations[session_id] = []
+            
+            # Add user message to history
+            conversations[session_id].append({
+                'role': 'user',
+                'content': message
+            })
+                        
+            # Get response from Gemini with conversation history
+            response = get_gemini_response(message, conversations[session_id])
+            
+            # Add assistant response to history
+            conversations[session_id].append({
+                'role': 'assistant',
+                'content': response['message']
+            })
+            
+            # Limit conversation history to last 10 messages
+            conversations[session_id] = conversations[session_id][-10:]
+            
             return jsonify(response)
         except Exception as e:
             logger.error(f"Error processing request: {str(e)}")
