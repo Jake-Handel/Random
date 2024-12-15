@@ -3,29 +3,16 @@ from flask_cors import CORS
 from gemini import configure_gemini, get_gemini_response
 import os
 from dotenv import load_dotenv
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv('api_key.env')
-logger.info("Loading environment variables...")
 
 app = Flask(__name__)
 CORS(app)
 
 # Configure Gemini with API key
-try:
-    api_key = os.getenv('GEMINI_API_KEY')
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY not found in environment variables")
-    configure_gemini(api_key)
-    logger.info("Gemini API configured successfully")
-except Exception as e:
-    logger.error(f"Error configuring Gemini: {str(e)}")
-    raise
+api_key = os.getenv('GEMINI_API_KEY')
+configure_gemini(api_key)
 
 # Store conversations in memory (you might want to use a database in production)
 conversations = {}
@@ -66,7 +53,6 @@ def handle_data():
             
             return jsonify(response)
         except Exception as e:
-            logger.error(f"Error processing request: {str(e)}")
             return jsonify({
                 "status": "error",
                 "message": f"Server error: {str(e)}"
@@ -78,5 +64,4 @@ def handle_data():
     })
 
 if __name__ == '__main__':
-    logger.info("Starting Flask server on port 5001...")
     app.run(debug=True, host='0.0.0.0', port=5001)
