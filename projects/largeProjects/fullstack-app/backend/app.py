@@ -8,7 +8,13 @@ from dotenv import load_dotenv
 load_dotenv('api_key.env')
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:3000"],
+        "methods": ["GET", "POST"],
+        "allow_headers": ["Content-Type", "X-Session-ID"]
+    }
+})
 
 # Configure Gemini with API key
 api_key = os.getenv('GEMINI_API_KEY')
@@ -17,11 +23,11 @@ configure_gemini(api_key)
 # Store conversations in memory (you might want to use a database in production)
 conversations = {}
 
-@app.route('/api/health', methods=['GET'])
+@app.route('/', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy", "message": "Backend is running!"})
 
-@app.route('/api/data', methods=['GET', 'POST'])
+@app.route('/api', methods=['GET', 'POST'])
 def handle_data():
     if request.method == 'POST':
         try:
@@ -38,30 +44,38 @@ def handle_data():
                 'role': 'user',
                 'content': message
             })
-                        
-            # Get response from Gemini with conversation history
+            
+            # Get response from Gemini
             response = get_gemini_response(message, conversations[session_id])
             
             # Add assistant response to history
             conversations[session_id].append({
                 'role': 'assistant',
-                'content': response['message']
+                'content': response
             })
             
             # Limit conversation history to last 10 messages
             conversations[session_id] = conversations[session_id][-10:]
             
-            return jsonify(response)
+            return jsonify({
+                'status': 'success',
+                'message': response
+            })
+            
         except Exception as e:
             return jsonify({
-                "status": "error",
-                "message": f"Server error: {str(e)}"
+                'status': 'error',
+                'message': str(e)
             }), 500
     
-    return jsonify({
-        "message": "Hello! Send me a message using POST request.",
-        "status": "success"
-    })
+    return jsonify({"message": "Send a POST request with your message"})
+
+@app.route('/api/todos', methods=['GET', 'POST'])
+def todo():
+    if request.method == 'POST':
+        data = request.json
+        return jsonify({"status": "success", "data": data})
+    return jsonify({"todos": []})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)

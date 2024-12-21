@@ -26,41 +26,28 @@ def get_gemini_response(prompt, history=None):
                 "   - Use ^ for exponents, * for multiplication\n"
                 "   - Don't use LaTeX/MathJax delimiters (no $ or $$)\n"
                 "   - For functions, write f(x) instead of $f(x)$\n"
-                "3. Format mathematical solutions clearly with line breaks and indentation\n\n"
+                "3. Format mathematical solutions clearly with line breaks and indentation\n"
+                "4. If unsure about a request, ask for clarification\n"
+                "5. If there is an error or does not comply with the rules, respond with 'I'm sorry, I cannot do that.'\n"
+                "6. No rude language, so language that is okay to be used for a child\n\n"
                 f"{formatted_history}\n\nUser: {prompt}"
             )
+        else:
+            full_prompt = prompt
         
         # Generate response
         response = model.generate_content(full_prompt)
         
         # Clean up response
-        response_text = response.text
+        response_text = response.text.strip()
         
         # Remove prefixes
-        prefixes_to_remove = ["Assistant:", "Agent:", "A:"]
+        prefixes_to_remove = ["Assistant:", "Agent:", "A:", "AI:"]
         for prefix in prefixes_to_remove:
             if response_text.startswith(prefix):
                 response_text = response_text[len(prefix):].strip()
         
-        # Remove LaTeX delimiters and clean up mathematical formatting
-        response_text = response_text.replace('$', '')  # Remove single $
-        response_text = response_text.replace('\\', '')  # Remove LaTeX escape characters
+        return response_text
         
-        # Clean up common LaTeX commands
-        latex_commands = [
-            'begin{equation}', 'end{equation}',
-            'begin{align}', 'end{align}',
-            'text', 'mathbf', 'mathrm'
-        ]
-        for cmd in latex_commands:
-            response_text = response_text.replace(f'{cmd}', '')
-        
-        return {
-            "status": "success",
-            "message": response_text
-        }
     except Exception as e:
-        return {
-            "status": "error",
-            "message": str(e)
-        }
+        return f"Error generating response: {str(e)}"
