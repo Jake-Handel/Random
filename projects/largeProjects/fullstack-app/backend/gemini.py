@@ -8,7 +8,7 @@ def configure_gemini(api_key):
 def get_gemini_response(prompt, history=None):
     try:
         # Configure the model
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         
         # Prepare conversation history
         if history:

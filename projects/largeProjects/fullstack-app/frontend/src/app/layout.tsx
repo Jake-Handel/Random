@@ -1,16 +1,29 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import React from 'react';
-import Link from 'next/link';  // Use Next.js Link
+// src/app/layout.tsx
+'use client';
 
-const inter = Inter({ subsets: ['latin'] })
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
+  
+  const router = useRouter(); // Initialize the router
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && router.pathname === '/') {
+      router.push('/ai'); // Redirect to the AI page
+    }
+  }, [router.pathname]);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -26,5 +39,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }
