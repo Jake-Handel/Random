@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker Deluxe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1><i class="fas fa-cookie-bite"></i> Cookie Clicker Deluxe</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span id="total-cookies">0</span> cookies
+                </div>
+                <div class="stat">
+                    <i class="fas fa-tachometer-alt"></i> <span id="cookies-per-second">0</span>/sec
+                </div>
+                <div class="stat">
+                    <i class="fas fa-trophy"></i> <span id="achievement-count">0</span> achievements
+                </div>
+            </div>
+        </div>
+
+        <div class="cookie-container">
+            <div class="click-effect" id="click-effect"></div>
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/00/41/cookie-309168_1280.png" alt="Cookie" id="cookie">
+            <div class="cookie-count" id="cookie-count">0 Cookies</div>
+            <div class="cookies-per-second" id="cps-display">0 cookies per second</div>
+        </div>
+        
+        <div class="game-area">
+            <div class="upgrades">
+                <h2><i class="fas fa-arrow-up"></i> Upgrades</h2>
+                <div class="upgrades-grid">
+                    <div class="upgrade" id="cursor">
+                        <div class="upgrade-icon"><i class="fas fa-mouse-pointer"></i></div>
+                        <div class="upgrade-info">
+                            <h3>Cursor</h3>
+                            <p>Autoclicks every 10 seconds</p>
+                            <div class="upgrade-stats">
+                                <span class="upgrade-count">0</span> owned
+                                <span class="upgrade-cps">+0.1 each</span>
+                            </div>
+                        </div>
+                        <button class="upgrade-btn" onclick="buyUpgrade('cursor')">
+                            <span class="cost">10</span> cookies
+                        </button>
+                    </div>
+                    
+                    <div class="upgrade" id="grandma">
+                        <div class="upgrade-icon"><i class="fas fa-user"></i></div>
+                        <div class="upgrade-info">
+                            <h3>Grandma</h3>
+                            <p>A nice grandma to bake more cookies</p>
+                            <div class="upgrade-stats">
+                                <span class="upgrade-count">0</span> owned
+                                <span class="upgrade-cps">+1 each</span>
+                            </div>
+                        </div>
+                        <button class="upgrade-btn" onclick="buyUpgrade('grandma')">
+                            <span class="cost">100</span> cookies
+                        </button>
+                    </div>
+
+                    <div class="upgrade" id="farm">
+                        <div class="upgrade-icon"><i class="fas fa-tractor"></i></div>
+                        <div class="upgrade-info">
+                            <h3>Farm</h3>
+                            <p>Grows cookie plants from cookie seeds</p>
+                            <div class="upgrade-stats">
+                                <span class="upgrade-count">0</span> owned
+                                <span class="upgrade-cps">+8 each</span>
+                            </div>
+                        </div>
+                        <button class="upgrade-btn" onclick="buyUpgrade('farm')">
+                            <span class="cost">1,100</span> cookies
+                        </button>
+                    </div>
+
+                    <div class="upgrade" id="factory">
+                        <div class="upgrade-icon"><i class="fas fa-industry"></i></div>
+                        <div class="upgrade-info">
+                            <h3>Factory</h3>
+                            <p>Produces large quantities of cookies</p>
+                            <div class="upgrade-stats">
+                                <span class="upgrade-count">0</span> owned
+                                <span class="upgrade-cps">+47 each</span>
+                            </div>
+                        </div>
+                        <button class="upgrade-btn" onclick="buyUpgrade('factory')">
+                            <span class="cost">12,000</span> cookies
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="achievements">
+                    <h2><i class="fas fa-trophy"></i> Achievements</h2>
+                    <div class="achievements-grid" id="achievements-container">
+                        <!-- Achievements will be added here by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="stats-panel">
+                    <h2><i class="fas fa-chart-line"></i> Stats</h2>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-label">Cookies Baked:</span>
+                            <span class="stat-value" id="total-cookies-baked">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Golden Cookies Clicked:</span>
+                            <span class="stat-value" id="golden-cookies-clicked">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Time Played:</span>
+                            <span class="stat-value" id="time-played">0s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    <div id="golden-cookie" class="golden-cookie">
+        <i class="fas fa-star"></i>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
