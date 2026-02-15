@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Phishing Education - Security Awareness Training{% endblock %}
+
+{% block content %}
+<div class="education-container">
+    <h2>🎯 This Was a Phishing Simulation!</h2>
+    
+    <div class="warning-box">
+        <strong>Good news!</strong> You've just participated in a security awareness training exercise. 
+        The email you received was a simulated phishing email designed to help you recognize real threats.
+    </div>
+
+    <h3>What Happened?</h3>
+    <p>You clicked on a link in what appeared to be a legitimate email, but was actually part of a 
+    security training simulation. In a real phishing attack, this could have led to:</p>
+    
+    <ul>
+        <li>Compromise of your login credentials</li>
+        <li>Installation of malware on your device</li>
+        <li>Theft of sensitive information</li>
+        <li>Unauthorized access to company systems</li>
+    </ul>
+
+    <div class="tips-list">
+        <h3>🛡️ How to Spot Phishing Emails:</h3>
+        <ul>
+            <li><strong>Check the sender's email address</strong> - Look for misspellings or suspicious domains</li>
+            <li><strong>Look for urgency</strong> - Phishing often creates false urgency ("Act now!", "Your account will be suspended")</li>
+            <li><strong>Hover over links</strong> - Check if the URL matches what you expect</li>
+            <li><strong>Watch for poor grammar</strong> - Many phishing emails contain spelling and grammar mistakes</li>
+            <li><strong>Verify requests</strong> - If you're unsure, contact the supposed sender through official channels</li>
+            <li><strong>Don't trust attachments</strong> - Be cautious with unexpected attachments</li>
+        </ul>
+    </div>
+
+    <h3>📚 Additional Resources</h3>
+    <p>For more information about phishing and cybersecurity best practices:</p>
+    
+    <ul>
+        <li><a href="#" target="_blank">Company Security Policy</a></li>
+        <li><a href="#" target="_blank">Security Awareness Training Portal</a></li>
+        <li><a href="#" target="_blank">Report Suspicious Emails</a></li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <p><strong>Remember:</strong> When in doubt, don't click! Verify first.</p>
+        <p style="font-size: 0.9em; color: #666;">
+            This training exercise was conducted by {{ campaign.name }} on {{ campaign.createdAt.strftime('%B %d, %Y') }}.
+        </p>
+    </div>
+</div>
+{% endblock %}

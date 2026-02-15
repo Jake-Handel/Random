@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Package Delivery Notification</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #28a745; color: white; padding: 20px; text-align: center; }
+        .content { background: #f8f9fa; padding: 30px; border: 1px solid #ddd; }
+        .package-info { background: white; padding: 15px; border: 1px solid #ddd; margin: 15px 0; }
+        .btn { display: inline-block; padding: 12px 24px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; }
+        .footer { background: #6c757d; color: white; padding: 15px; text-align: center; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Package Delivery</h1>
+        </div>
+        <div class="content">
+            <h2>Delivery Attempt Failed</h2>
+            <p>Hello {{firstName}},</p>
+            <p>We attempted to deliver your package but couldn't complete the delivery due to an incorrect address.</p>
+            
+            <div class="package-info">
+                <h3>Package Details:</h3>
+                <p><strong>Tracking Number:</strong> #{{trackingNumber}}</p>
+                <p><strong>Carrier:</strong> Express Delivery Services</p>
+                <p><strong>Delivery Date:</strong> {{deliveryDate}}</p>
+                <p><strong>Reason:</strong> Address verification required</p>
+            </div>
+            
+            <p>To update your delivery information and reschedule delivery:</p>
+            <p style="text-align: center; margin: 30px 0;">
+                <a href="{{LINK}}" class="btn">UPDATE DELIVERY INFO</a>
+            </p>
+            
+            <p><strong>Important:</strong> Your package will be returned to sender in 48 hours if action is not taken.</p>
+            <hr>
+            <p><small>This is an automated delivery notification. Please do not reply to this email.</small></p>
+        </div>
+        <div class="footer">
+            <p>Express Delivery Services - Customer Service</p>
+            <p>© 2024 All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

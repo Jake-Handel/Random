@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Add Targets - Phishing Awareness Tool{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>👥 Add New Targets</h2>
+    
+    <form method="POST" style="max-width: 600px;">
+        <div class="form-group">
+            <label for="emails">Email Addresses (one per line):</label>
+            <textarea id="emails" name="emails" class="form-control" rows="10" required
+                      placeholder="john.doe@company.com&#10;jane.smith@company.com&#10;bob.wilson@company.com"></textarea>
+            <small style="color: #666;">Enter one email address per line. You can paste multiple addresses at once.</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="first_name">Default First Name (optional):</label>
+            <input type="text" id="first_name" name="first_name" class="form-control"
+                   placeholder="Team Member">
+        </div>
+        
+        <div class="form-group">
+            <label for="department">Default Department (optional):</label>
+            <input type="text" id="department" name="department" class="form-control"
+                   placeholder="General">
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn btn-success">Add Targets</button>
+            <a href="{{ url_for('targets') }}" class="btn btn-primary">Cancel</a>
+        </div>
+    </form>
+    
+    <div class="card" style="margin-top: 30px;">
+        <h3>💡 Tips</h3>
+        <ul>
+            <li>You can copy and paste email addresses from spreadsheets or other documents</li>
+            <li>Each email address should be on a separate line</li>
+            <li>The default first name and department will be applied to all targets if specified</li>
+            <li>Make sure you have proper authorization before adding employees to phishing simulations</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

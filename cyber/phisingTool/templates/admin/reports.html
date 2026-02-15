@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Phishing Awareness Tool{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>📊 Campaign Reports</h2>
+    
+    {% if campaigns %}
+        <div class="dashboard-grid">
+            {% for campaign in campaigns %}
+            <div class="card">
+                <h3>{{ campaign.name }}</h3>
+                <p><strong>Subject:</strong> {{ campaign.subject }}</p>
+                <p><strong>Template:</strong> {{ campaign.templateName }}</p>
+                <p><strong>Created:</strong> {{ campaign.createdAt.strftime('%m/%d/%Y') }}</p>
+                
+                <div id="stats-{{ campaign.id }}" style="margin-top: 15px;">
+                    <p>Loading statistics...</p>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <button onclick="loadStats({{ campaign.id }})" class="btn btn-primary">Refresh Stats</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <h3>No Reports Available</h3>
+            <p>No campaigns have been created yet. <a href="{{ url_for('create_campaign') }}">Create a campaign</a> to start tracking results.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function loadStats(campaignId) {
+    const statsDiv = document.getElementById('stats-' + campaignId);
+    statsDiv.innerHTML = '<p>Loading statistics...</p>';
+    
+    fetch('/api/campaign_stats/' + campaignId)
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            statsDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div><strong>Emails Sent:</strong> ${data.total_sent}</div>
+                    <div><strong>Opened:</strong> ${data.total_opened}</div>
+                    <div><strong>Clicked:</strong> ${data.total_clicked}</div>
+                    <div><strong>Open Rate:</strong> ${data.open_rate}%</div>
+                    <div style="grid-column: 1 / -1;"><strong>Click Rate:</strong> ${data.click_rate}%</div>
+                </div>
+            `;
+        })
+        .catch(function(error) {
+            statsDiv.innerHTML = '<p style="color: red;">Error loading statistics</p>';
+        });
+}
+
+// Load stats for all campaigns on page load
+document.addEventListener('DOMContentLoaded', function() {
+    {% for campaign in campaigns %}
+    loadStats({{ campaign.id }});
+    {% endfor %}
+});
+</script>
+{% endblock %}

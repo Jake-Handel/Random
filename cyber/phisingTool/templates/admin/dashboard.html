@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Phishing Awareness Tool{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- Overview Card -->
+    <div class="card">
+        <h3>📊 Campaign Overview</h3>
+        <p><strong>Total Campaigns:</strong> {{ campaigns|length }}</p>
+        <p><strong>Active Campaigns:</strong> {{ campaigns|selectattr('isActive')|list|length }}</p>
+        <p><strong>Total Emails Sent:</strong> {{ total_emails }}</p>
+        <p><strong>Total Clicks:</strong> {{ total_clicks }}</p>
+        <p><strong>Click Rate:</strong> {{ click_rate }}%</p>
+    </div>
+
+    <!-- Recent Campaigns -->
+    <div class="card">
+        <h3>📧 Recent Campaigns</h3>
+        {% if campaigns %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for campaign in campaigns[:5] %}
+                    <tr>
+                        <td>{{ campaign.name }}</td>
+                        <td>
+                            {% if campaign.isActive %}
+                                <span class="status-active">Active</span>
+                            {% else %}
+                                <span class="status-inactive">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ campaign.createdAt.strftime('%m/%d/%Y') }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">View</a>
+                            <a href="#" class="btn btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No campaigns found. <a href="{{ url_for('create_campaign') }}">Create your first campaign</a>.</p>
+        {% endif %}
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <h3>⚡ Quick Actions</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="{{ url_for('create_campaign') }}" class="btn btn-success">Create New Campaign</a>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="card">
+        <h3>📈 Performance Metrics</h3>
+        <canvas id="performanceChart" width="400" height="200"></canvas>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">
+            Shows phishing awareness improvement over time
+        </p>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <h3>🔔 Recent Activity</h3>
+        {% if recent_activity %}
+            <ul style="list-style: none; padding: 0;">
+                {% for activity in recent_activity %}
+                <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <strong>{{ activity.type }}</strong> - {{ activity.description }}
+                    <br><small style="color: #666;">{{ activity.timestamp.strftime('%m/%d/%Y %H:%M') }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recent activity to display.</p>
+        {% endif %}
+    </div>
+
+    <!-- System Status -->
+    <div class="card">
+        <h3>🔧 System Status</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <strong>Database:</strong>
+                <span class="status-active">Connected</span>
+            </div>
+            <div>
+                <strong>Email Server:</strong>
+                <span class="status-active">Ready</span>
+            </div>
+            <div>
+                <strong>Storage:</strong>
+                <span class="status-active">Normal</span>
+            </div>
+            <div>
+                <strong>Last Backup:</strong>
+                <span>{{ last_backup or 'Never' }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Chart -->
+{% block extra_js %}
+<script>
+// Simple chart implementation (you can replace with Chart.js for better charts)
+const canvas = document.getElementById('performanceChart');
+const ctx = canvas.getContext('2d');
+
+// Sample data - replace with real data from your backend
+const data = {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    datasets: [{
+        label: 'Click Rate (%)',
+        data: [25, 18, 12, 8],
+        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+        borderColor: 'rgba(52, 152, 219, 1)',
+        borderWidth: 2
+    }]
+};
+
+// Simple bar chart
+const barWidth = 60;
+const barSpacing = 40;
+const maxValue = Math.max(...data.datasets[0].data);
+const chartHeight = 150;
+const chartWidth = canvas.width;
+
+data.datasets[0].data.forEach((value, index) => {
+    const barHeight = (value / maxValue) * chartHeight;
+    const x = 50 + (index * (barWidth + barSpacing));
+    const y = chartHeight - barHeight;
+    
+    ctx.fillStyle = 'rgba(52, 152, 219, 0.8)';
+    ctx.fillRect(x, y, barWidth, barHeight);
+    
+    // Add labels
+    ctx.fillStyle = '#333';
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(data.labels[index], x + barWidth/2, chartHeight + 20);
+    ctx.fillText(value + '%', x + barWidth/2, y - 5);
+});
+</script>
+{% endblock %}
+{% endblock %}
