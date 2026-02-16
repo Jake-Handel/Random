@@ -1,5 +1,7 @@
 *.venv
 *.vscode
+.settings/
+.vscode/*
 *__pycache__
 cyber/phisingTool/myenv
 *.env

@@ -1,3 +1,5 @@
+/* Credit to https://www.geeksforgeeks.org/c/hangman-game-in-c/ for the inspiration and the template */
+
 /* Imports */
 #include <stdio.h>   // Allows input/output operations (printf, scanf, getchar, etc.)
 #include <string.h>  // Allows string manipulation functions (strlen, strcpy, strcmp, etc.)
