@@ -2,13 +2,23 @@ import re
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+import hashlib
+from pwnedpasswords import PwnedPasswords
 
 class PasswordStrengthChecker:
     def __init__(self, root):
         self.root = root
         self.root.title("Password Strength Checker")
-        self.root.geometry("400x300")
+        self.root.geometry("450x400")
         self.root.resizable(False, False)
+        
+        # Initialize pwnedpasswords API
+        if HAS_PWNED:
+            self.pwned = PwnedPasswords()
+            print("✓ Using pwnedpasswords API for breach detection")
+        else:
+            self.pwned = None
+            print("⚠ pwnedpasswords not available - install with: pip install pwnedpasswords")
         
         # Configure style
         style = ttk.Style()
@@ -53,12 +63,14 @@ class PasswordStrengthChecker:
         self.lower_label = ttk.Label(self.feedback_frame, text="✓ Contains lowercase letter", foreground="gray")
         self.digit_label = ttk.Label(self.feedback_frame, text="✓ Contains number", foreground="gray")
         self.special_label = ttk.Label(self.feedback_frame, text="✓ Contains special character", foreground="gray")
+        self.common_label = ttk.Label(self.feedback_frame, text="✓ Not a common password", foreground="gray")
         
         self.length_label.pack(anchor='w', pady=2)
         self.upper_label.pack(anchor='w', pady=2)
         self.lower_label.pack(anchor='w', pady=2)
         self.digit_label.pack(anchor='w', pady=2)
         self.special_label.pack(anchor='w', pady=2)
+        self.common_label.pack(anchor='w', pady=2)
         
         # Set initial state
         self.update_feedback("", 0)
@@ -69,6 +81,26 @@ class PasswordStrengthChecker:
         else:
             self.password_entry.config(show="•")
     
+    def _is_common_password(self, password):
+        """Check if password is in breach databases using pwnedpasswords API"""
+        if not password:
+            return False, ""
+        
+        if HAS_PWNED and self.pwned:
+            try:
+                # Use pwnedpasswords API for fast, comprehensive checking
+                count = self.pwned.search(password)
+                if count > 0:
+                    return True, f"Found in {count:,} data breaches"
+                else:
+                    return False, ""
+            except Exception as e:
+                print(f"API error: {e}")
+                return False, ""
+        else:
+            # pwnedpasswords not available
+            return False, ""
+    
     def check_strength(self, event=None):
         password = self.password_var.get()
         strength = 0
@@ -77,7 +109,8 @@ class PasswordStrengthChecker:
             'upper': False,
             'lower': False,
             'digit': False,
-            'special': False
+            'special': False,
+            'common': False
         }
         
         # Check each requirement
@@ -97,14 +130,20 @@ class PasswordStrengthChecker:
             strength += 1
             feedback['special'] = True
         
-        # Update UI
-        self.update_feedback(feedback, strength)
+        # Check for common passwords (ML-inspired detection)
+        is_common, common_reason = self._is_common_password(password)
+        if not is_common and password:  # Only pass if not common and password is not empty
+            strength += 1
+            feedback['common'] = True
+        
+        # Update UI with common password warning
+        self.update_feedback(feedback, strength, is_common, common_reason)
     
-    def update_feedback(self, feedback, strength):
+    def update_feedback(self, feedback, strength, is_common=False, common_reason=""):
         if strength == 0:
             # Reset all to gray
             for label in [self.length_label, self.upper_label, self.lower_label, 
-                         self.digit_label, self.special_label]:
+                         self.digit_label, self.special_label, self.common_label]:
                 label.config(foreground="gray")
             self.strength_meter['value'] = 0
             self.strength_label.config(text="", foreground="black")
@@ -117,28 +156,45 @@ class PasswordStrengthChecker:
         self.digit_label.config(foreground="green" if feedback['digit'] else "red")
         self.special_label.config(foreground="green" if feedback['special'] else "red")
         
-        # Update strength meter
-        strength_percent = (strength / 5) * 100
+        # Update common password label
+        if is_common:
+            self.common_label.config(text=f"✗ Common password detected!", foreground="red")
+        elif feedback.get('common', False):
+            self.common_label.config(text="✓ Not a common password", foreground="green")
+        else:
+            self.common_label.config(text="✓ Not a common password", foreground="gray")
+        
+        # Update strength meter (now out of 6 instead of 5)
+        strength_percent = (strength / 6) * 100
         self.strength_meter['value'] = strength_percent
         
-        # Update strength label
-        if strength <= 1:
+        # Update strength label with common password override
+        if is_common:
+            strength_text = "COMMON PASSWORD"
+            color = "red"
+            # Show reason in tooltip or as additional info
+            self.strength_label.config(text=f"{strength_text} - {common_reason}", foreground="red")
+        elif strength <= 2:
             strength_text = "Very Weak"
             color = "red"
-        elif strength == 2:
+            self.strength_label.config(text=strength_text, foreground=color)
+        elif strength == 3:
             strength_text = "Weak"
             color = "orange"
-        elif strength == 3:
+            self.strength_label.config(text=strength_text, foreground=color)
+        elif strength == 4:
             strength_text = "Moderate"
             color = "#FFD700"  # Gold
-        elif strength == 4:
+            self.strength_label.config(text=strength_text, foreground=color)
+        elif strength == 5:
             strength_text = "Strong"
             color = "#90EE90"  # Light Green
+            self.strength_label.config(text=strength_text, foreground=color)
         else:
             strength_text = "Very Strong"
             color = "green"
+            self.strength_label.config(text=strength_text, foreground=color)
             
-        self.strength_label.config(text=strength_text, foreground=color)
         self.strength_meter['style'] = f"{color}.Horizontal.TProgressbar"
 
 def main():

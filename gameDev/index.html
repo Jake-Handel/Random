@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub - HTML5 Games Platform</title>
+    
+    <!-- CrazyGames SDK v3 -->
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .game-info {
+            padding: 20px;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .game-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .play-button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            margin: 50px auto;
+            padding: 0;
+            width: 90%;
+            max-width: 900px;
+            height: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .game-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+        }
+
+        .loading-screen {
+            text-align: center;
+            color: #666;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .sdk-info {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .banner-container {
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .control-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .control-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Game Hub</h1>
+            <p class="subtitle">HTML5 Games Platform with CrazyGames SDK Integration</p>
+        </header>
+
+        <div class="sdk-info" id="sdkInfo">
+            <p>Initializing CrazyGames SDK...</p>
+        </div>
+
+        <div class="banner-container" id="bannerContainer">
+            <p>Banner ads will appear here</p>
+        </div>
+
+        <main>
+            <section class="games-grid">
+                <article class="game-card" data-game="brainrot-click">
+                    <div class="game-thumbnail">🧠</div>
+                    <div class="game-info">
+                        <h3 class="game-title">Brain Rot Clicker</h3>
+                        <p class="game-description">A mindless clicking game that's strangely addictive. Click to earn points and unlock upgrades!</p>
+                        <button class="play-button" onclick="launchGame('brainrot-click')">Play Now</button>
+                    </div>
+                </article>
+
+                <article class="game-card" data-game="sample-game">
+                    <div class="game-thumbnail">🎯</div>
+                    <div class="game-info">
+                        <h3 class="game-title">Sample Game</h3>
+                        <p class="game-description">A template game showcasing CrazyGames SDK integration features.</p>
+                        <button class="play-button" onclick="launchGame('sample-game')">Play Now</button>
+                    </div>
+                </article>
+
+                <article class="game-card" data-game="future-game">
+                    <div class="game-thumbnail">🚀</div>
+                    <div class="game-info">
+                        <h3 class="game-title">Coming Soon</h3>
+                        <p class="game-description">More exciting games are in development. Stay tuned!</p>
+                        <button class="play-button" disabled>Coming Soon</button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="controls">
+                <h3 style="text-align: center; margin-bottom: 15px;">SDK Controls</h3>
+                <div class="control-buttons">
+                    <button class="control-button" onclick="showAd()">Show Ad</button>
+                    <button class="control-button" onclick="showRewardedAd()">Rewarded Ad</button>
+                    <button class="control-button" onclick="toggleBanner()">Toggle Banner</button>
+                    <button class="control-button" onclick="saveGameData()">Save Game</button>
+                    <button class="control-button" onclick="loadGameData()">Load Game</button>
+                    <button class="control-button" onclick="showUserInfo()">User Info</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeGame()">&times;</button>
+            <div class="game-container" id="gameContainer">
+                <div class="loading-screen">
+                    <h2>Loading Game...</h2>
+                    <div class="loading-spinner"></div>
+                    <p>Please wait while we initialize the game</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CrazyGames SDK integration
+        let sdkInitialized = false;
+        let currentEnvironment = 'unknown';
+        let bannerVisible = false;
+
+        // Initialize SDK when page loads
+        window.addEventListener('load', async () => {
+            await initializeSDK();
+        });
+
+        async function initializeSDK() {
+            try {
+                // Check if SDK is available
+                if (typeof window.CrazyGames === 'undefined') {
+                    updateSDKInfo('CrazyGames SDK not loaded. Running in standalone mode.');
+                    return;
+                }
+
+                // Initialize the SDK
+                await window.CrazyGames.SDK.init();
+                sdkInitialized = true;
+
+                // Get environment info
+                currentEnvironment = window.CrazyGames.SDK.environment;
+                
+                updateSDKInfo(`SDK Initialized! Environment: ${currentEnvironment}`);
+
+                // Initialize banner ads if available
+                if (currentEnvironment === 'crazygames' || currentEnvironment === 'local') {
+                    initializeBanner();
+                }
+
+                // Notify game start
+                if (sdkInitialized) {
+                    window.CrazyGames.SDK.game.gameplayStart();
+                }
+
+            } catch (error) {
+                console.error('SDK initialization failed:', error);
+                updateSDKInfo(`SDK initialization failed: ${error.message}`);
+            }
+        }
+
+        function updateSDKInfo(message) {
+            const sdkInfo = document.getElementById('sdkInfo');
+            sdkInfo.innerHTML = `<p>${message}</p>`;
+        }
+
+        async function initializeBanner() {
+            try {
+                if (sdkInitialized && window.CrazyGames.SDK.banner) {
+                    const bannerContainer = document.getElementById('bannerContainer');
+                    await window.CrazyGames.SDK.banner.requestBanner({
+                        containerId: 'bannerContainer'
+                    });
+                    bannerVisible = true;
+                }
+            } catch (error) {
+                console.error('Banner initialization failed:', error);
+            }
+        }
+
+        async function showAd() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                await window.CrazyGames.SDK.ad.requestAd();
+            } catch (error) {
+                console.error('Ad request failed:', error);
+                alert('Ad request failed: ' + error.message);
+            }
+        }
+
+        async function showRewardedAd() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                const adCompleted = await window.CrazyGames.SDK.ad.requestRewardedAd();
+                if (adCompleted) {
+                    alert('Ad completed! Reward the player.');
+                } else {
+                    alert('Ad was not completed.');
+                }
+            } catch (error) {
+                console.error('Rewarded ad request failed:', error);
+                alert('Rewarded ad request failed: ' + error.message);
+            }
+        }
+
+        async function toggleBanner() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                if (bannerVisible) {
+                    await window.CrazyGames.SDK.banner.clearBanner();
+                    bannerVisible = false;
+                    document.getElementById('bannerContainer').innerHTML = '<p>Banner ads will appear here</p>';
+                } else {
+                    await initializeBanner();
+                }
+            } catch (error) {
+                console.error('Banner toggle failed:', error);
+                alert('Banner toggle failed: ' + error.message);
+            }
+        }
+
+        async function saveGameData() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                const testData = { 
+                    highScore: 1000, 
+                    level: 5, 
+                    lastPlayed: new Date().toISOString(),
+                    playerName: 'TestPlayer'
+                };
+                await window.CrazyGames.SDK.data.set(testData);
+                alert('Game data saved successfully!');
+            } catch (error) {
+                console.error('Save failed:', error);
+                alert('Save failed: ' + error.message);
+            }
+        }
+
+        async function loadGameData() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                const data = await window.CrazyGames.SDK.data.get();
+                alert('Game data loaded: ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                console.error('Load failed:', error);
+                alert('Load failed: ' + error.message);
+            }
+        }
+
+        async function showUserInfo() {
+            if (!sdkInitialized) {
+                alert('SDK not initialized');
+                return;
+            }
+
+            try {
+                const userInfo = await window.CrazyGames.SDK.user.getUser();
+                const systemInfo = window.CrazyGames.SDK.user.systemInfo;
+                alert(`User Info: ${JSON.stringify(userInfo, null, 2)}\n\nSystem Info: ${JSON.stringify(systemInfo, null, 2)}`);
+            } catch (error) {
+                console.error('Get user info failed:', error);
+                alert('Get user info failed: ' + error.message);
+            }
+        }
+
+        // Game management functions
+        function launchGame(gameId) {
+            const modal = document.getElementById('gameModal');
+            const container = document.getElementById('gameContainer');
+            
+            // Show loading screen
+            container.innerHTML = `
+                <div class="loading-screen">
+                    <h2>Loading ${gameId}...</h2>
+                    <div class="loading-spinner"></div>
+                    <p>Initializing game with CrazyGames SDK...</p>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+
+            // Simulate game loading
+            setTimeout(() => {
+                if (gameId === 'brainrot-click') {
+                    container.innerHTML = `<iframe src="brainRotClick.html" width="100%" height="100%" frameborder="0"></iframe>`;
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px;">
+                            <h2>🎮 ${gameId}</h2>
+                            <p>Game loaded successfully!</p>
+                            <p>SDK Environment: ${currentEnvironment}</p>
+                            <p>Use the control buttons below to test SDK features.</p>
+                        </div>
+                    `;
+                }
+                
+                // Notify gameplay start
+                if (sdkInitialized) {
+                    window.CrazyGames.SDK.game.gameplayStart();
+                }
+            }, 2000);
+        }
+
+        function closeGame() {
+            const modal = document.getElementById('gameModal');
+            modal.style.display = 'none';
+            
+            // Notify gameplay stop
+            if (sdkInitialized) {
+                window.CrazyGames.SDK.game.gameplayStop();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGame();
+            }
+        }
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (sdkInitialized) {
+                if (document.hidden) {
+                    window.CrazyGames.SDK.game.gameplayStop();
+                } else {
+                    window.CrazyGames.SDK.game.gameplayStart();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
