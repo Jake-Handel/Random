@@ -40,8 +40,8 @@ font = pygame.font.Font(None, 36)
 # Function to create pipes
 def create_pipe():
     pipe_x = SCREEN_WIDTH
-    pipe_height = random.randint(100, 300)
-    gap_size = random.randint(150,250)
+    pipe_height = random.randint(150, 300)
+    gap_size = random.randint(100,250)
     top_pipe = pygame.Rect(pipe_x, 0, PIPE_WIDTH, pipe_height)
     bottom_pipe = pygame.Rect(pipe_x, pipe_height + gap_size, PIPE_WIDTH, SCREEN_HEIGHT - pipe_height - gap_size)
     return top_pipe, bottom_pipe
